@@ -1,4 +1,4 @@
-module proc_rpc
+module proc
 
 go 1.13
 
