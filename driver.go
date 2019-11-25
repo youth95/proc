@@ -1,4 +1,4 @@
-package goproc_rpc
+package proc
 
 import (
 	"log"
