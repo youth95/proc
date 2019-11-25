@@ -1,4 +1,4 @@
-module proc
+module github.com/youth95/proc
 
 go 1.13
 
