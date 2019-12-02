@@ -34,6 +34,28 @@ func (*Service) ReadProcessCmdline(input *uint64, reply *string) error {
 	return nil
 }
 
+type ProcessInfo struct {
+	Pid     uint64
+	CmdLine string
+}
+
+func (*Service) ReadAllProcessInfo(input *int, reply *[]ProcessInfo) error {
+	pidS, err := linux.ListPID("/proc", 50000)
+	if err != nil {
+		return err
+	}
+	var ret []ProcessInfo
+	for _, pid := range pidS {
+		cmdLine, err := linux.ReadProcessCmdline(fmt.Sprintf("/proc/%d/cmdline", pid))
+		if err != nil {
+			return err
+		}
+		ret = append(ret, ProcessInfo{pid, cmdLine})
+	}
+	*reply = ret
+	return nil
+}
+
 func (*Service) ReadCPUInfo(input *int, reply *linux.CPUInfo) error {
 	info, err := linux.ReadCPUInfo("/proc/cpuinfo")
 	if err != nil {

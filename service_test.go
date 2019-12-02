@@ -115,6 +115,7 @@ func TestService_ReadMounts(t *testing.T) {
 func TestService_ReadNetTCPSocketsV4(t *testing.T) {
 	a := assert.New(t)
 	var result linux.NetTCPSockets
+
 	err := client.Call("linux.ReadNetTCPSocketsV4", 0, &result)
 	a.Nil(err)
 	a.NotEmpty(result)
@@ -125,6 +126,15 @@ func TestService_ReadNetTCPSocketsV6(t *testing.T) {
 	a := assert.New(t)
 	var result linux.NetTCPSockets
 	err := client.Call("linux.ReadNetTCPSocketsV6", 0, &result)
+	a.Nil(err)
+	a.NotEmpty(result)
+	t.Log(result)
+}
+
+func TestService_ReadAllProcessInfo(t *testing.T) {
+	a := assert.New(t)
+	var result []ProcessInfo
+	err := client.Call("linux.ReadAllProcessInfo", 0, &result)
 	a.Nil(err)
 	a.NotEmpty(result)
 	t.Log(result)
